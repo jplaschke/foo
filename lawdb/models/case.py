@@ -1,7 +1,7 @@
 from django.db import models
 
 from . import court
-from . import opinion
+from . import cite
 
 class Case(models.Model):
     case_name = models.CharField(max_length=200)
@@ -9,20 +9,17 @@ class Case(models.Model):
     ruling = models.CharField(max_length=40) # change to ENUM
        # reversed and remanded, etc
     
-    # court = 
+    case_url = models.CharField(max_length=200,default="")
     decide_date = models.DateTimeField('date decided')
     argue_date = models.DateTimeField('date argued')
-    case_below_cite = models.OneToOneField('Opinion', related_name='case_below_cite')
+    case_below_cite = models.OneToOneField('Cite')
     case_court_below = models.OneToOneField('Court')
     docket = models.CharField(max_length=50)
     plantiff = models.CharField(max_length=50)
     defendant = models.CharField(max_length=50)
     syllabus = models.TextField
     #
-    citations = models.ManyToManyField('self')
-    
-    #code = many to many
-
+    # fill out case citation association table
 
     def __str__(self):              # __unicode__ on Python 2
         return self.case_name
