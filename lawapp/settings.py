@@ -14,6 +14,9 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SETTINGS_DIR = os.path.dirname(__file__)
+PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir)
+PROJECT_PATH = os.path.abspath(PROJECT_PATH)
 
 
 # Quick-start development settings - unsuitable for production
@@ -29,6 +32,9 @@ LOGGING_CONFIG=None
 
 ALLOWED_HOSTS = []
 
+# django-bootstrap-ui settings
+DJANGO_BOOTSTRAP_UI_THEME = 'bootswatch-paper'
+
 
 # Application definition
 
@@ -39,8 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'templateapp',
     'lawdb',
- 
+    'bootstrap_ui',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +133,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = 'staticfiles'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)

@@ -1,10 +1,9 @@
-<body>
-    <div>
-      {{ user }}
-      {% if user.is_anonymous %}
-      <a href="{% url 'login' %}">login</a>
-      {% else %}
-      <a href="{% url 'logout' %}">logout</a>
-      {% endif %}
-    </div>
-</body>
+{% extends "bootstrap_ui/bootstrap-skeleton.html" %}
+
+{% block head-meta %}
+    <meta name="keywords" content="law, case law, machine learning, citations, rulings, opinions, legal, attorney">
+{% endblock %}
+
+{% block head-title %}
+    Clear Cite
+{% endblock %}
