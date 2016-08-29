@@ -3,6 +3,8 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    url(r'^$', include('lawdb.urls')),
+    url(r'^admin/', admin.site.urls),
     url(r'lawdb/', include('lawdb.urls')),
+    url(r'^$', include('lawdb.urls')),
+    url(r'^accounts/', include('registration.backends.default.urls')),
 ]
