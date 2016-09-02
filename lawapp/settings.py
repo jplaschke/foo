@@ -32,6 +32,19 @@ LOGGING_CONFIG=None
 
 ALLOWED_HOSTS = []
 
+EMAIL_HOST= 'smtp.gmail.com'
+EMAIL_HOST_USER = 'plaschkej@gmail.com'
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 587
+EMAIL_USER_TLS = True
+
+'''
+unlock captcha
+https://accounts.google.com/displayunlockcaptcha
+'''
+
+
+
 # django-bootstrap-ui settings
 DJANGO_BOOTSTRAP_UI_THEME = 'bootswatch-paper'
 
@@ -40,6 +53,7 @@ DJANGO_BOOTSTRAP_UI_THEME = 'bootswatch-paper'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'registration',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -49,19 +63,17 @@ INSTALLED_APPS = [
     'templateapp',
     'lawdb',
     'bootstrap_ui',
+    'bootstrap_admin',
     'crispy_forms',
-    'floppyforms',
-    'captcha',
-    'registration',
 ]
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -71,7 +83,7 @@ ROOT_URLCONF = 'lawapp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': ['templates', os.path.join(os.path.dirname(BASE_DIR), "lawapp/templateapp/templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,25 +137,25 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'US/Eastern'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = 'staticfiles'
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_in_env", "static_root")
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
-ACCOUNT_ACTIVATION_DAYS=1
-REGISTRATION_AUTO_LOGIN=True
+LOGIN_REDIRECT_URL = '/lawdb'
+ACCOUNT_ACTIVATION_DAYS = 1
+REGISTRATION_AUTO_LOGIN = True
+SITE_ID = 1
+
+

@@ -59,16 +59,16 @@ your static files then delete the 'block head-css below'-->
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">301Solutions</a>
+        <a class="navbar-brand" href="#">Legal Prescient</a>
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-right">
           <li class="active"><a href="/">Home</a></li>
           <li><a href="lawdb/about">About</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="lawdb/contact">Contact</a></li>
 		    <form class='navbar-form navbar-right' method='POST' actions=''>{% csrf_token %} 
 			<div class='form-group'>
-			    <input type='txt' class='form-control' name='username' placeholder='uername' />
+			    <input type='txt' class='form-control' name='username' placeholder='username' />
 			</div>
 			<div class='form-group'>
 			    <input type='txt' class='form-control' name='password' placeholder='password' />
@@ -78,7 +78,7 @@ your static files then delete the 'block head-css below'-->
 		{% if request.user.is_authentiated %}
 			<li><a href="{% url 'auth_logout' %}">Logout</a></li>
 		{% else %}
-		    <li><a href="{% url 'registration_register' %}>Register</a></li>
+		    <li><a href="{% url 'registration_register' %}">Register</a></li>
 		{% endif %}
 		</ul>
 

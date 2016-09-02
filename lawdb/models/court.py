@@ -8,8 +8,8 @@ class Court(models.Model):
     state = models.ForeignKey('State')
     hierachy_level = models.PositiveSmallIntegerField() # smaller is lower
 
-    lower_court = models.OneToOneField('self', related_name = 'inferior_court')
-    upper_court = models.OneToOneField('self', related_name = 'superior_court')
+    lower_court = models.OneToOneField('self', blank=True, null=True, related_name="superior_court")
+    upper_court = models.OneToOneField('self', blank=True, null=True, related_name="inferior_court")
 
     FEDERAL = 'Fed'
     STATE = 'State'
@@ -18,7 +18,7 @@ class Court(models.Model):
         (STATE, 'State'),
     )
     fed_or_state = models.CharField(
-        max_length=1,
+        max_length=5,
         choices=FED_STATE_CHOICES,
     )
 
@@ -29,7 +29,7 @@ class Court(models.Model):
         (STATE, 'Appellate'),
     )
     court_type = models.CharField(
-        max_length=1,
+        max_length=5,
         choices=COURT_TYPE_CHOICES,
     )
 
