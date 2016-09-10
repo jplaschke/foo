@@ -3,7 +3,8 @@ import datetime
 from . import lawSchool
 
 class Judge(models.Model):
-    first_name = models.CharField(max_length=15)
+    first_name = models.CharField(max_length=25)
+    middle_name = models.CharField(max_length=25,null=True,blank=True)
     last_name = models.CharField(max_length=25)
     year_born = models.PositiveSmallIntegerField(null=True)
     state_born = models.CharField(max_length=2,null=True)
@@ -26,6 +27,7 @@ class Judge(models.Model):
     class Meta:
         db_table = 'Judge'
         app_label = 'lawdb'
+        unique_together = ('first_name', 'last_name', 'state_born')
         
 
     def loadFromCsv(self):
@@ -39,6 +41,7 @@ class Judge(models.Model):
             if (len(fullName) > 1):
                 if (len(fullName) > 3):
                     last_name = fullName[-1]
+                    middle_name = fullName[1]
                 elif (len(fullName) > 2):
                     if ((fullName[1] == 'Van') or (fullName[1] == 'De')):
                         last_name = fullName[1]+" "+fullName[2]
@@ -53,8 +56,12 @@ class Judge(models.Model):
                     state_born = parsed_line[1]
                 elif (len(parsed_line) > 1):
                     state_born = parsed_line[2]
-                j = Judge(first_name=first_name, last_name=last_name, year_born=9999, state_born=state_born)
-                j.save()
+                try:
+                    j = Judge(first_name=first_name, last_name=last_name, year_born=9999, state_born=state_born)
+                    j.save()
+                except:
+                    print ("Exception: "+first_name+" "+last_name+"\n")
+                
         csvfile.close()
             			
 		

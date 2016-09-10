@@ -10,6 +10,8 @@ class Opinion(models.Model):
     #majority
     #concurrence, Plurality opinion
     #dissent, per curiam, unanimous, etc
+    ruling_type = models.CharField(max_length=30, default="")
+	# opinion, dissent, concurrence, conc_diss (concur and dissent)
     opinion_type = models.CharField(max_length=30, default="") # change to enum 
     opinion_text = models.TextField(null=True)
 
