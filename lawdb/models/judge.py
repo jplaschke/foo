@@ -1,6 +1,5 @@
 from django.db import models
 import datetime
-from . import lawSchool
 
 class Judge(models.Model):
     first_name = models.CharField(max_length=25)

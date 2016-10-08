@@ -1,8 +1,7 @@
 from django.db import models
 
 import sys, traceback
-from . import court
-from . import cite
+
 from datetime import datetime
 
 
@@ -31,6 +30,7 @@ class Case(models.Model):
     class Meta:
         db_table = 'Case'
         app_label = 'lawdb'
+        unique_together = ("case_name", "topic")
 		
     def MultiStripString(self, indate):
         DATE_FORMATS = ['%B %d, %Y', '%b. %d, %Y']
@@ -86,23 +86,26 @@ class Case(models.Model):
                     else:
                         dec_date_object = self.MultiStripString(decided_date)
                     
-                    if (len(parsed_line) > 9):
-                        c = Case(case_name=parsed_line[1], topic=parsed_line[0], ruling="empty", publication=parsed_line[2], \
+                    caseName = parsed_line[1].strip()
+                    topic = parsed_line[0].strip()
+                    if (" v. " in caseName) or "in re" in caseName.lower() or "ex part" in caseName.lower() :
+                        if (len(parsed_line) > 9):
+                            c = Case(case_name=caseName, topic=topic, ruling="empty", publication=parsed_line[2], \
                               case_url=parsed_line[9],decide_date=dec_date_object, argue_date=arg_date_object, \
                               docket=parsed_line[5],plantiff=parsed_line[3],defendant=parsed_line[4])
-                    else:
-                        c = Case(case_name=parsed_line[1], topic=parsed_line[0], ruling="empty", publication=parsed_line[2], \
-                           case_url=parsed_line[8], docket=parsed_line[5],plantiff=parsed_line[3],defendant=parsed_line[4])
+                        else:
+                            c = Case(case_name=caseName, topic=topic, ruling="empty", publication=parsed_line[2], \
+                                 case_url=parsed_line[8], docket=parsed_line[5],plantiff=parsed_line[3],defendant=parsed_line[4])
 					
-                    c.save()
+                        c.save()
                 except Exception as e:
                     print ("Exception: "+line+"\n")
                     print ("e = {0}",sys.exc_info()[0])
                     traceback.print_exc()
-                    sys.exit(-1)					
-                    c1 = Case(case_name=parsed_line[1], topic=parsed_line[0], ruling="empty", publication=parsed_line[2], \
-                           case_url=parsed_line[7], docket=parsed_line[5],plantiff=parsed_line[3],defendant=parsed_line[4])
-                    c1.save()
+                    #sys.exit(-1)					
+                    #c1 = Case(case_name=parsed_line[1], topic=parsed_line[0], ruling="empty", publication=parsed_line[2], \
+                    #       case_url=parsed_line[7], docket=parsed_line[5],plantiff=parsed_line[3],defendant=parsed_line[4])
+                    #c1.save()
 					              
         csvfile.close()
                         

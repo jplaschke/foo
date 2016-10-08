@@ -1,9 +1,11 @@
 from django.db import models
 
+import sys, traceback
+
 
 class Cite(models.Model):
-    cite_name = models.CharField(max_length=20)
-    url = models.CharField(max_length=50) 
+    cite_name = models.CharField(max_length=250)
+    url = models.CharField(max_length=250) 
     
 
     def __str__(self):              # __unicode__ on Python 2
@@ -12,3 +14,5 @@ class Cite(models.Model):
     class Meta:
         db_table = 'Cite'
         app_label = 'lawdb'
+
+ 
